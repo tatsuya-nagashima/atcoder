@@ -1,48 +1,37 @@
-# h,w = map(int, input().split())
-# matrix = [list(input()) for _ in range(h)]
+import sys, re
+from math import ceil, floor, sqrt, pi, factorial, gcd
+from copy import deepcopy
+from collections import Counter, deque
+from heapq import heapify, heappop, heappush
+from itertools import accumulate, product, combinations, combinations_with_replacement
+from bisect import bisect, bisect_left, bisect_right
+from functools import reduce
+from decimal import Decimal, getcontext
+# input = sys.stdin.readline 
+def i_input(): return int(input())
+def i_map(): return map(int, input().split())
+def i_list(): return list(map(int, input().split()))
+def i_row(N): return [int(input()) for _ in range(N)]
+def i_row_list(N): return [list(map(int, input().split())) for _ in range(N)]
+def s_input(): return input()
+def s_map(): return input().split()
+def s_list(): return list(input().split())
+def s_row(N): return [input() for _ in range(N)]
+def s_row_str(N): return [list(input().split()) for _ in range(N)]
+def s_row_list(N): return [list(input()) for _ in range(N)]
+def lcm(a, b): return a * b // gcd(a, b)
+sys.setrecursionlimit(10 ** 6)
+INF = float('inf')
+MOD = 10 ** 9 + 7
+num_list = []
+str_list = []
 
-# directions = [[0, 1], [1,1], [1, 0], [1, -1], [0, -1], [-1,-1],[-1, 0],[-1, 1]]
-# for r in range(h):
-#   for c in range(w):
-#     count = 0
-#     if matrix[r][c] == ".":
-#       for dx, dy in directions:
-#         if 0 <= r + dx <= h - 1 and 0<= c + dy <= w - 1 and matrix[r + dx][c + dy] == "#":
-#           count += 1
-#       matrix[r][c] = str(count)
-# for i in matrix:
-#   print(str("".join(i)))
+def main():
+    n = i_input()
+    a, b = i_map()
+    num_list = i_list()
 
-import sys
-sys.setrecursionlimit(10000)
-def dfs(G, v, seen):
-    seen[v]=True
-    for next_v in G[v]:
-        if seen[next_v]: continue
-        dfs(G, next_v, seen)
-    return seen
+    print()
 
-from collections import deque
-def bfs(G, u, dist):
-    dist[u] = 0 
-    queue = deque([u])
-    while queue:
-        v = queue.popleft()
-        for next_v in G[v]:
-            if dist[next_v] is None:
-                dist[next_v] = dist[v] + 1
-                queue.append(next_v)
-    return dist
-
-import itertools
-def cumsum(arr):
-    return list(itertools.accumulate(arr))
-
-def ssp(dp):
-    dp[0][0] = True
-    for i in range(n):
-        for j in range(s+1):
-            dp[i+1][j] |= dp[i][j]
-            if j >= t[i]:
-                dp[i+1][j] |= dp[i][j-t[i]]
-    return dp
+if __name__ == '__main__':
+    main()
