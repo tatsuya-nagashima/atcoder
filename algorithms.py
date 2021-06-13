@@ -42,7 +42,7 @@ def binary_search(arr, key):
     right = len(arr)
 
     while right - left > 1 :
-        mid = left + (right - left) / 2;
+        mid = left + (right - left) // 2;
 
         if arr[mid] >= key: right = mid
         else: left = mid
