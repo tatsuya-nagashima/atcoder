@@ -35,3 +35,16 @@ def ssp(dp):
             if j >= t[i]:
                 dp[i+1][j] |= dp[i][j-t[i]]
     return dp
+
+#二分探索
+def binary_search(arr, key):
+    left = -1
+    right = len(arr)
+
+    while right - left > 1 :
+        mid = left + (right - left) / 2;
+
+        if arr[mid] >= key: right = mid
+        else: left = mid
+    
+    return right
