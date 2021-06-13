@@ -16,7 +16,7 @@ def bfs(G, u, dist):
     while queue:
         v = queue.popleft()
         for next_v in G[v]:
-            if dist[next_v] is None:
+            if dist[next_v] == -1:
                 dist[next_v] = dist[v] + 1
                 queue.append(next_v)
     return dist
@@ -27,13 +27,13 @@ def cumsum(arr):
     return list(itertools.accumulate(arr))
 
 #部分和問題
-def ssp(dp):
+def ssp(dp, arr, N, A):
     dp[0][0] = True
-    for i in range(n):
-        for j in range(s+1):
+    for i in range(N):
+        for j in range(A+1):
             dp[i+1][j] |= dp[i][j]
-            if j >= t[i]:
-                dp[i+1][j] |= dp[i][j-t[i]]
+            if j >= arr[i]:
+                dp[i+1][j] |= dp[i][j-arr[i]]
     return dp
 
 #二分探索
