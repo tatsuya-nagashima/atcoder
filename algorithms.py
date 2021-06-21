@@ -37,14 +37,22 @@ def ssp(dp, arr, N, A):
     return dp
 
 #二分探索
-def binary_search(arr, key):
-    left = -1
-    right = len(arr)
-
-    while right - left > 1 :
-        mid = left + (right - left) // 2;
-
-        if arr[mid] >= key: right = mid
-        else: left = mid
+def binary_search_left(arr, key):
+  left = -1
+  right = len(arr)
+  while right - left >1:
+    mid = (left + right)//2
+    if arr[mid] >= key: right = mid
+    else: left = mid
     
-    return right
+  return right
+
+def binary_search_right(arr, key):
+  left = -1
+  right = len(arr)
+  while right - left >1:
+    mid = (left + right)//2
+    if arr[mid] > key: right = mid
+    else: left = mid
+    
+  return right  
