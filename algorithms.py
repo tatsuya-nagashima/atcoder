@@ -56,3 +56,80 @@ def binary_search_right(arr, key):
     else: left = mid
     
   return right  
+
+#エラトステネスの篩
+def get_sieve_of_eratosthenes(n):
+    if not isinstance(n, int):
+        raise TypeError('n is int type.')
+    if n < 2:
+        raise ValueError('n is more than 2')
+    data = list(range(0, n + 1))
+    for i in range(2, int(n**0.5) + 1):
+        if data[i] > 0:
+            for j in range(i**2, n + 1, i):
+                data[j] = 0
+    return [i for i in range(2, n + 1) if data[i] > 0]
+
+
+from collections import deque
+import collections
+
+n, m = map(int, input().split())
+
+ab = []
+
+graph = [[] for _ in range(n+1)]
+for i in range(m):
+  u, v = map(int, input().split())
+  graph[u].append(v)
+  graph[v].append(u)
+  ab.append((u, v))
+
+check = 0
+
+#まず、次数が３以上のものがあればNG
+for i in range(n+1):
+  if len(graph[i]) >= 3:
+    check = 1
+    break
+
+#UnionFindの定形
+par = [-1]*(n+1) #負なら親で、その絶対値が連結のサイズ。
+ 
+def find(x):#xの親を求める
+  X = x
+  while par[X] >= 0: #親にたどり着くまで、つまり、parが負になるまでparをたどる。
+    X = par[X]
+  return X #最後、parが負になるようなXがxの親になる。
+def same(x,y):
+  return find(x) == find(y)
+def unite(x,y):#xが含まれるグループとyが含まれるグループをくっつける
+  X = find(x) #xが含まれるグループの親はX
+  Y = find(y) #yが含まれるグループの親はY
+  if X == Y:
+    return 0
+  else:
+    if par[X] > par[Y]: #Xのグループのサイズが小さいときは文字を入れ替える（※負数であることに注意）
+      X,Y = Y,X
+    par[X] += par[Y] #サイズの大きいXのグループに、Yのグループのサイズを加える。
+    par[Y] = X #Yのほうは「子」になったので、「Yの親はX」という情報に変更する（findでたどれるように）
+def size(x):
+  return -par[find(x)]
+#ここまでUnionFindの定形
+
+#閉路があればNG。sameで判定できる
+for a, b in ab:
+  if same(a, b):
+    check = 1
+  unite(a, b)
+
+if check == 0:
+  print("Yes")
+else:
+  print("No")
+
+#順列全探索
+import itertools
+n = 3
+for p in itertools.permutations(range(n)):
+  print(p)
